@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import LassoLars
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error
@@ -38,14 +37,6 @@ def main():
     evaluate(y_test, linear_regression_prediction, "Linear Regression")
     plot_scatter('Linear Regression model', 'Linear Regression', y_test, linear_regression_prediction)
 
-    # Bayesian Regression
-    bayesian_ridge_model = BayesianRidge()
-    bayesian_ridge_model.fit(x_train, y_train)
-    bayesian_regression_prediction = bayesian_ridge_model.predict(x_test)
-
-    plot_scatter('Bayesian Regression', 'Bayesian Ridge model', y_test, bayesian_regression_prediction)
-    evaluate(y_test, bayesian_regression_prediction, "Bayesian Ridge")
-
     # Least angle regression
     lars_lasso_model = LassoLars(alpha=.1, normalize=False)
     lars_lasso_model.fit(x_train, y_train)
@@ -62,6 +53,10 @@ def main():
 
     plot_scatter("Ridge regression", "Ridge regression", y_test, ridge_regression_prediction)
     evaluate(y_test, ridge_regression_prediction, "Ridge Regression")
+
+    # Adaboost regression model
+
+    # XGB
 
     plt.show()
 
