@@ -90,8 +90,7 @@ def train_model(df):
 
 def evaluate(actual, prediction, name):
     """
-            prints L1 and L2 loss
-
+    prints L1 and L2 loss
     """
     l1_loss = mean_absolute_error(actual, prediction)
     l2_loss = mean_squared_error(actual, prediction, squared=1)
@@ -101,9 +100,7 @@ def evaluate(actual, prediction, name):
 
 def plot_scatter(figure, title, x_plot, y_plot):
     """
-
-            To make main function cleaner, shortened scatter plot function
-
+    To make main function cleaner, shortened scatter plot function
     """
     plt.figure(figure)
     sns.scatterplot(x=x_plot, y=y_plot)
