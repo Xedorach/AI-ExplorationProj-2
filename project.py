@@ -11,7 +11,6 @@ from sklearn.metrics import mean_squared_error
 '''
  Project 2 code for AI Explorations, EEEE 547 course Fall 2021
  Written by Saifeldin Hassan and Tony Hanna.
- 
 '''
 
 def main():
@@ -21,19 +20,23 @@ def main():
 
     # Data visualization
 
-    plt.figure("Age vs Spending Score")
+    plt.figure("Age")
+    plt.title("Spending score vs Age")
     sns.scatterplot(data=df, x='Age', y='Spending_Score_100')
 
-    plt.figure("Gender vs Spending Score")
+    plt.figure("Gender")
+    plt.title("Spending score vs Gender")
     sns.barplot(data=df, x='Gender', y='Spending_Score_100')
 
-    plt.figure("Annual income vs Spending Score")
+    plt.figure("Annual income")
+    plt.title("Annual income vs Spending Score")
     sns.scatterplot(data=df, x='Annual_Income', y='Spending_Score_100')
 
     # Linear regression
     linear_regression_model = LinearRegression()
     linear_regression_model.fit(x_train, y_train)
     linear_regression_prediction = linear_regression_model.predict(x_test)
+
     evaluate(y_test, linear_regression_prediction, "Linear Regression")
     plot_scatter('Linear Regression model', 'Linear Regression', y_test, linear_regression_prediction)
 
@@ -54,10 +57,6 @@ def main():
     plot_scatter("Ridge regression", "Ridge regression", y_test, ridge_regression_prediction)
     evaluate(y_test, ridge_regression_prediction, "Ridge Regression")
 
-    # Adaboost regression model
-
-    # XGB
-
     plt.show()
 
 
@@ -65,7 +64,7 @@ def load_data(filename):
     """
     Function takes a string as input, data_set.csv loads it and displays data in shell.
     also renames male and female to 0 and 1 for easier handling
-   """
+    """
 
     df = pd.read_csv(filename)
     print("\n", df, "\n", df.info(), "\n", df.columns)
@@ -77,7 +76,7 @@ def load_data(filename):
 
 def train_model(df):
     """
-            Function preps model training variables
+    Function preps model training variables
     """
     # Create the test train split
     train, test = train_test_split(df, test_size=0.4)
@@ -94,8 +93,8 @@ def evaluate(actual, prediction, name):
             prints L1 and L2 loss
 
     """
-    l1_loss = mean_absolute_error(prediction, actual)
-    l2_loss = mean_squared_error(prediction, actual, squared=1)
+    l1_loss = mean_absolute_error(actual, prediction)
+    l2_loss = mean_squared_error(actual, prediction, squared=1)
 
     print('\n' + f'L1 Loss ( {name} )= {l1_loss:.2f}' + '\n'f'L2 Loss ( {name} ) = {l2_loss:.2f}')
 
