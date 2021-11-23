@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LassoLars
 from sklearn.linear_model import Ridge
+from sklearn.ensemble import AdaBoostRegressor
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
@@ -40,30 +41,35 @@ def main():
     # Linear regression
     linear_regression_model = LinearRegression()
     linear_regression_prediction = model_test("Linear Regression", linear_regression_model)
-    evaluate(y_test, linear_regression_prediction, "Linear Regression")
+    evaluate(linear_regression_prediction, "Linear Regression")
     plot_scatter('Linear Regression model', 'Linear Regression',  linear_regression_prediction)
 
     # Least angle regression
     lars_lasso_model = LassoLars(alpha=.1, normalize=False)
     lars_lasso_prediction = model_test("LARS LASSO", lars_lasso_model)
     plot_scatter("LARS LASO", "Least angle regression",  lars_lasso_prediction)
-    evaluate(y_test, lars_lasso_prediction, "LARS LASO")
+    evaluate(lars_lasso_prediction, "LARS LASO")
 
     # Ridge regression model
 
     ridge_regression_model = Ridge(alpha=.5)
     ridge_regression_prediction = model_test("Ridge Regression", ridge_regression_model)
-
     plot_scatter("Ridge regression", "Ridge regression", ridge_regression_prediction)
-    evaluate(y_test, ridge_regression_prediction, "Ridge Regression")
+    evaluate(ridge_regression_prediction, "Ridge Regression")
 
     # XGB Regressor
 
     xgb_regressor_model = XGBRegressor()
     xgb_regressor_prediction = model_test("XGB Regressor", xgb_regressor_model)
-
     plot_scatter("XGB", "XGB Regressor", xgb_regressor_prediction)
-    evaluate(y_test, xgb_regressor_prediction, "XGB")
+    evaluate(xgb_regressor_prediction, "XGB")
+
+    # Adaboost Regressor
+
+    ada_regressor_model = AdaBoostRegressor(random_state=0, n_estimators=100)
+    ada_regressor_prediction = model_test("AdaBoost", ada_regressor_model)
+    plot_scatter("AdaBoost", "Adaboost Regressor", ada_regressor_prediction)
+    evaluate(ada_regressor_prediction, "AdaBoost Regressor")
 
     plt.show()
 
@@ -102,12 +108,12 @@ def train_model(df):
     y_test = test['Spending_Score_100']
 
 
-def evaluate(actual, prediction, name):
+def evaluate(prediction, name):
     """
     prints L1 and L2 loss
     """
-    l1_loss = mean_absolute_error(actual, prediction)
-    l2_loss = mean_squared_error(actual, prediction, squared=1)
+    l1_loss = mean_absolute_error(y_test, prediction)
+    l2_loss = mean_squared_error(y_test, prediction, squared=1)
 
     print('\n' + f'L1 Loss ( {name} )= {l1_loss:.2f}' + '\n'f'L2 Loss ( {name} ) = {l2_loss:.2f}')
 
